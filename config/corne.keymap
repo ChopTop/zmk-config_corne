@@ -1,106 +1,30 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/rgb.h>
-#include <dt-bindings/zmk/ext_power.h>
 
 / {
-    chosen {
-        zmk,kscan = &kscan0;
-        zmk,matrix-transform = &default_transform;
-        zmk,backlight = &backlight;
-        zmk,underglow = &led_strip;
-        zmk,battery = &vbatt;
-    };
+    keymap {
+        compatible = "zmk,keymap";
 
-    // Преобразование матрицы (стандартное для Corne)
-    default_transform: keymap_transform_0 {
-        compatible = "zmk,matrix-transform";
-        columns = <12>;
-        rows = <4>;
-        map = <
-            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5)  RC(0,6) RC(0,7) RC(0,8) RC(0,9) RC(0,10) RC(0,11)
-            RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5)  RC(1,6) RC(1,7) RC(1,8) RC(1,9) RC(1,10) RC(1,11)
-            RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5)  RC(2,6) RC(2,7) RC(2,8) RC(2,9) RC(2,10) RC(2,11)
-                    RC(3,2) RC(3,3) RC(3,4) RC(3,5)            RC(3,6) RC(3,7) RC(3,8) RC(3,9)
-        >;
-    };
+        default_layer {
 
-    // Физическое подключение матрицы к пинам nice!nano
-    kscan0: kscan {
-        compatible = "zmk,kscan-gpio-matrix";
-        wakeup-source;
-        diode-direction = "col2row";
-        row-gpios
-            = <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            ;
-        col-gpios
-            = <&pro_micro 8 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 9 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 10 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 16 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 14 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 15 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 18 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 19 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 20 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 21 GPIO_ACTIVE_HIGH>
-            ;
-    };
-
-    // Подсветка (Backlight) — 6 светодиодов на половинку
-    backlight: pwmleds {
-        compatible = "pwm-leds";
-        label = "Backlight LEDs";
-        // Здесь нужно перечислить все 6 пинов, если они управляются через ШИМ
-        // или используется отдельная лента. Для Corne с nice!nano это сложный момент.
-        // Если ваши 6 светодиодов — это часть общей ленты из 18, то отдельный backlight не нужен,
-        // всем управляет underglow. В этом случае секцию можно удалить.
-    };
-
-    // Лента для Underglow и Backlight (если они соединены последовательно)
-    led_strip: led_strip {
-        compatible = "zmk,ws2812-strip";
-        label = "RGB LEDs";
-        // Пин, на который подключена лента (обычно это 17 на nice!nano)
-        gpios = <&pro_micro 17 GPIO_ACTIVE_HIGH>;
-        chain-length = <21>; // <--- ЭТО ГЛАВНОЕ ЧИСЛО (6+12)
-        };
-    };
-
-    vbatt: vbatt {
-        compatible = "zmk,battery-nrf-vddh";
-    };
-
-    // Слои клавиатуры
-    layers {
-        compatible = "zmk,layers";
-
-        base: layer_0 {
-            // Названия клавиш (KC_A и т.д.) вы можете подставить позже через keymap editor
             bindings = <
-                &kp TRANSPARENT
-                // ... здесь будут ваши клавиши ...
+&kp Q &kp W &kp F &kp P &kp B        &kp J &kp L &kp U &kp Y &kp SEMI
+&kp A &kp R &kp S &kp T &kp G        &kp M &kp N &kp E &kp I &kp O
+&kp Z &kp X &kp C &kp D &kp V        &kp K &kp H &kp COMMA &kp DOT &kp SLASH
+
+        &kp LGUI &kp SPACE &mo 1      &kp ENTER &kp BSPC &kp RALT
+            >;
+        };
+
+        fn_layer {
+
+            bindings = <
+&kp ESC &kp N1 &kp N2 &kp N3 &kp N4        &kp N5 &kp N6 &kp N7 &kp N8 &kp N9
+&kp TAB &kp MINUS &kp EQUAL &kp LBKT &kp RBKT  &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp N0
+&kp GRAVE &trans &trans &trans &trans        &trans &trans &trans &trans &trans
+
+            &trans &trans &trans              &trans &trans &trans
             >;
         };
     };
-
-    // Макросы для аппаратного управления
-    macros {
-        ZMK_MACRO(ext_power_on,
-            wait-ms = <1>;
-            tap-ms = <1>;
-            bindings = <&ext_power EP_ON>;
-        )
-        ZMK_MACRO(ext_power_off,
-            bindings = <&ext_power EP_OFF>;
-        )
-    };
 };
-
-// Комбинации для включения периферии и управления RGB (поместите их на слой)
-// &ext_power_on и &ext_power_off можно повесить на любые клавиши.
-// &rgb_ug RGB_TOG — встроенное поведение для включения/выключения подсветки.
