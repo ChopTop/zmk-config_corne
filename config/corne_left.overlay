@@ -1,12 +1,12 @@
 / {
     chosen {
         zmk,display = &oled;
-        zmk,backlight = &backlight;
+        zmk,backlight = &backlight_leds;
         zmk,underglow = &underglow;
     };
 
-    backlight: backlight {
-        compatible = "zmk,backlight-gpio";
+    backlight_leds: leds {
+        compatible = "gpio-leds";
 
         led0 { gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; };
         led1 { gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; };
