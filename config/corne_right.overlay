@@ -21,7 +21,7 @@
     };
 
     underglow: underglow {
-        compatible = "zmk,rgb-underglow";
+        compatible = "zmk,underglow";
         chain-length = <21>;
     };
 };
