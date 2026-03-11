@@ -25,10 +25,6 @@
         compatible = "zmk,underglow";
         chain-length = <21>;
     };
-
-    chosen {
-        zmk,underglow = &underglow;
-    };
 };
 
 &i2c0 {
