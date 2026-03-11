@@ -1,0 +1,13 @@
+/backlight {
+    compatible = "pwm-leds";
+    label = "ZMK_BACKLIGHT";
+    pwms = <&pwm0 13 1000000 PWM_POLARITY_NORMAL>;
+    default-brightness-level = <3>;
+    brightness-levels = <0 1 2 3 4 5>;
+};
+
+/ {
+    chosen {
+        zmk,backlight = &backlight;
+    };
+};
