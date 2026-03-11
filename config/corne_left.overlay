@@ -3,6 +3,11 @@
         zmk,display = &oled;
         zmk,backlight = &backlight_leds;
         zmk,underglow = &underglow;
+        zmk,studio = &studio_endpoint;
+    };
+
+    studio_endpoint: studio {
+        compatible = "zmk,studio";
     };
 
     backlight_leds: leds {
