@@ -24,6 +24,11 @@
     underglow: underglow {
         compatible = "zmk,rgb-underglow";
         chain-length = <21>;
+        data-gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
+    };
+
+    chosen {
+        zmk,underglow = &underglow;
     };
 };
 
