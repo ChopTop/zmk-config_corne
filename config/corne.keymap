@@ -67,7 +67,7 @@
         label = "RGB LEDs";
         // Пин, на который подключена лента (обычно это 17 на nice!nano)
         gpios = <&pro_micro 17 GPIO_ACTIVE_HIGH>;
-        chain-length = <18>; // <--- ЭТО ГЛАВНОЕ ЧИСЛО (6+12)
+        chain-length = <21>; // <--- ЭТО ГЛАВНОЕ ЧИСЛО (6+12)
         };
     };
 
