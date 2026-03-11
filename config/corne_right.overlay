@@ -6,7 +6,13 @@
 
     backlight: backlight {
         compatible = "zmk,backlight-gpio";
-        gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
+
+        led0 { gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; };
+        led1 { gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; };
+        led2 { gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; };
+        led3 { gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; };
+        led4 { gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; };
+        led5 { gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; };
     };
 
     underglow: underglow {
