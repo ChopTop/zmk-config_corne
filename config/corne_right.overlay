@@ -1,5 +1,10 @@
-#include <dt-bindings/zmk/rgb.h>
+/ {
+    chosen {
+        zmk,underglow = &underglow;
+    };
 
-&rgbled_strip {
-    chain-length = <21>;
+    underglow: underglow {
+        compatible = "zmk,rgb-underglow";
+        chain-length = <21>;
+    };
 };

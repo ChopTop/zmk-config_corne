@@ -1,8 +1,12 @@
-#include <dt-bindings/zmk/rgb.h>
-
 / {
     chosen {
         zmk,display = &oled;
+        zmk,underglow = &underglow;
+    };
+
+    underglow: underglow {
+        compatible = "zmk,rgb-underglow";
+        chain-length = <21>;
     };
 };
 
@@ -15,8 +19,4 @@
         width = <128>;
         height = <32>;
     };
-};
-
-&rgbled_strip {
-    chain-length = <21>;
 };
